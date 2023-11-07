@@ -6,7 +6,7 @@ import os
 from werkzeug.utils import secure_filename
 from PIL import Image
 
-
+# test
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
