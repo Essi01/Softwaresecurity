@@ -6,7 +6,6 @@ import os
 from werkzeug.utils import secure_filename
 from PIL import Image
 
-# test
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -35,7 +34,7 @@ def get_db():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
+# Database initialization
 def init_db():
     with app.app_context():
         db = get_db()
@@ -56,7 +55,7 @@ def init_db():
 
 init_db()
 
-
+# Routes for the application
 @app.route('/')
 def index():
     db = get_db()
@@ -70,7 +69,7 @@ def index():
 
     return render_template('index.html', posts=posts, articles=articles)
 
-
+# Route for the submit page
 @app.route('/submit', methods=['POST', 'GET'])
 def submit():
     if request.method == 'POST':
@@ -111,7 +110,7 @@ def submit():
         return redirect(url_for('index'))
     return render_template('submit.html')
 
-
+# Run the application on port 8080
 if __name__ == '__main__':
    app.run(debug=True, host='0.0.0.0', port=8080)
 
