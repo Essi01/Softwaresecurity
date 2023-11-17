@@ -1,3 +1,5 @@
+#Kjører disse kommandoene i terminalen
 docker build -t my-flask-app .
 docker run -p 8080:8080 my-flask-app
+#Kjører denne i nettleseren og kommer inn på nettsiden
 http://localhost:8080
