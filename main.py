@@ -6,8 +6,6 @@ import os
 from werkzeug.utils import secure_filename
 from PIL import Image
 
-
-
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
@@ -19,8 +17,6 @@ UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
 
 @app.context_processor
 def inject_zip():
