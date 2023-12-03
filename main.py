@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from PIL import Image
 
 
+
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
@@ -20,9 +21,26 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
+
 @app.context_processor
 def inject_zip():
     return dict(zip=zip)
+
+
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['SESSION_COOKIE_SECURE'] = True # set secure flag
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # set httponly flag
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # set samesite flag
+
+@app.after_request
+def apply_csp(response):
+    response.headers["Content-Security-Policy"] = "default-src 'self'; img-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'"
+    return response
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # Database connection
 def get_db():
